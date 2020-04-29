@@ -4,9 +4,10 @@
 
 ## Install
 
-Install the dependencies with:
+Install dependencies:
 
 ```bash
+# Ubuntu/Debian
 apt-get install python3 python3-dev python3-pip git
 pip3 install --upgrade git+https://github.com/arthaud/python3-pwntools.git
 ```
@@ -14,19 +15,16 @@ pip3 install --upgrade git+https://github.com/arthaud/python3-pwntools.git
 ## Usage
 
 ```bash
-python3 anubis.py --username your-heroku-email --password your-heroku-password
+python3 anubis.py --email user@example.com --password YourPassword123
 ```
 
-Send traffic to port `1080/tcp` and enjoy your socks5 proxy. (Proxychains)
+Send traffic to port `1080/tcp` and enjoy your socks5 proxy.
 
-## Roadmap
-
-* Add error checks.
-* Fix logging issues.
+By default, the script will use credentials generated on the fly using your email and password combination for authentication, so only you will be able to access the proxy.
 
 ## Disclaimer
 
-Contents are provided as is for educational purposes only, use at your own risk.
+Contents provided for educational purposes only, use at your own risk.
 
 ## License
 
