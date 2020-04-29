@@ -22,6 +22,19 @@ Send traffic to port `1080/tcp` and enjoy your socks5 proxy.
 
 By default, the script will use credentials generated on the fly using your email and password combination for authentication, so only you will be able to access the proxy.
 
+#### Help
+
+```md
+Usage: anubis.py [options] arguments
+
+Options:
+  -h, --help            show this help message and exit
+  -e EMAIL, --email=EMAIL
+                        heroku email
+  -p PASSWORD, --password=PASSWORD
+                        heroku password
+```
+
 ## Disclaimer
 
 Contents provided for educational purposes only, use at your own risk.
