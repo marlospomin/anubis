@@ -34,7 +34,7 @@ def checkChiselBinary():
     if not path.exists("chisel"):
         # Commands to install chisel
         commands = [
-            "wget -q https://github.com/jpillora/chisel/releases/download/1.3.1/chisel_linux_amd64.gz",
+            "wget -q https://github.com/jpillora/chisel/releases/download/1.4.0/chisel_linux_amd64.gz",
             "gunzip -f -q chisel_linux_amd64.gz",
             "mv chisel_linux_amd64 chisel",
             "chmod +x chisel"
@@ -50,7 +50,7 @@ def checkChiselBinary():
         # Log success
         log.success("%s/chisel found" % getcwd())
 
-def loginHeroku(username, password):
+def loginHeroku(email, password):
     # Log progress
     log.info("Logging in...")
     # Start process
@@ -59,20 +59,20 @@ def loginHeroku(username, password):
     cli.recvline()
     # Recv prompt
     cli.recv(64)
-    # Send username
-    cli.sendline(username)
+    # Send email
+    cli.sendline(email)
     # Recv password
     cli.recv(64)
     # Send password
     cli.sendline(password)
-    # Wait for signal
+    # Wait for the signal
     cli.poll()
 
-def createApp(name, username, password):
+def createApp(name, email, password):
     # Progress
     progress = log.progress("Creating a heroku app")
     # Proxy password
-    env_password = "CHISEL_AUTH=%s:%s" % (username, password)
+    env_password = "CHISEL_AUTH=%s:%s" % (email, password)
     # Create the app
     system(["heroku", "apps:create", name], stdout=DEVNULL)
     system(["heroku", "stack:set", "container"], stdout=DEVNULL)
@@ -88,15 +88,15 @@ def createApp(name, username, password):
 
 def setup():
     # Login
-    loginHeroku(username, password)
+    loginHeroku(email, password)
     # Create our proxy app
-    createApp(appname, username, password)
+    createApp(appname, email, password)
 
-def execute(name, username, password):
+def execute(name, email, password):
     # Log
     log.info("Lauching proxy...")
     # Store variables
-    credentials = "%s:%s" % (username, password)
+    credentials = "%s:%s" % (email, password)
     url = "https://%s.herokuapp.com" % name
     # Attempt to spawn chisel
     try:
@@ -134,24 +134,24 @@ def main():
     # Run setup
     setup()
     # Run your proxy
-    execute(appname, username, password)
+    execute(appname, email, password)
 
 # Run main() upon script call
 if __name__ == "__main__":
     # Initialize parser
     parser = OptionParser(usage="usage: %prog [options] arguments")
     # Add options
-    parser.add_option("-u", "--username", dest="username", help="heroku username")
+    parser.add_option("-u", "--email", dest="email", help="heroku email")
     parser.add_option("-p", "--password", dest="password", help="heroku password")
     # Parse arguments
     (options, args) = parser.parse_args()
-    # If username/passwor isn't supplied error out
-    if not options.username or not options.password:
-        parser.error("missing username/password")
+    # If email/password isn't supplied, error out
+    if not options.email or not options.password:
+        parser.error("missing email/password")
     # Re assign variables
-    username = options.username
+    email = options.email
     password = options.password
     # Store appname
-    appname = "%s-proxy-%s" % (username[0:8], password[0:4])
+    appname = "anubis-proxy"
     # Start the program
     main()
