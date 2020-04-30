@@ -2,20 +2,10 @@
 
 > Disposable private socks5 proxy behind Heroku's infrastructure.
 
-## Install
-
-Install dependencies:
-
-```bash
-# Ubuntu/Debian
-apt-get install python3 python3-dev python3-pip git
-pip3 install --upgrade git+https://github.com/arthaud/python3-pwntools.git
-```
-
 ## Usage
 
 ```bash
-python3 anubis.py --email user@example.com --password YourPassword123
+./anubis.sh -e root@example.com -p P44sW0rDGo3sHeR3
 ```
 
 Send traffic to port `1080/tcp` and enjoy your socks5 proxy.
@@ -25,14 +15,9 @@ By default, the script will use credentials generated on the fly using your emai
 #### Help
 
 ```md
-Usage: anubis.py [options] arguments
-
-Options:
-  -h, --help            show this help message and exit
-  -e EMAIL, --email=EMAIL
-                        heroku email
-  -p PASSWORD, --password=PASSWORD
-                        heroku password
+Usage: ./anubis.sh [-e your-heroku-email] [-p your-heroku-password]
+  -e, --email            Your Heroku email
+  -p, --password         Your Heroku password
 ```
 
 ## Disclaimer
